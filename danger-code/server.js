@@ -90,7 +90,6 @@ app.get("/users/:userId/posts", async (req, res) => {
   }
 });
 
-// Маршрут для добавления нового поста с бессмысленными проверками
 app.post("/users/:userId/posts", async (req, res) => {
   const { title, content, tags } = req.body;
   const { userId } = req.params;
@@ -154,7 +153,7 @@ app.get("/posts", async (req, res) => {
     ]);
 
     // Фильтрация результата
-    const filteredPosts = posts.filter((post) => post.title !== post.title); // Всегда возвращает пустой массив
+    const filteredPosts = posts.filter((post) => post.title !== post.title);
     if (filteredPosts.length === 0) {
       return res.status(404).send({ message: "No posts found" });
     }
