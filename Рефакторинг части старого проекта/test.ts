@@ -19,7 +19,6 @@ const handler = async (req, res) => {
   };
 
   try {
-    // Получить все материалы, среди которых нужно искать
     const movies = await Movie.find(
       { ...searchMoviesMatch },
       {
@@ -30,10 +29,8 @@ const handler = async (req, res) => {
       }
     ).lean();
 
-    // Получить ID материалов, среди которых выполнять поиск
     const movieIds = movies.map((movie) => movie._id);
 
-    // Параллельно получить информацию (для оптимизации)
     const [totalSize, items] = await Promise.all([
       MoviePageLog.find({
         ...dateFilterParam,
@@ -125,7 +122,6 @@ const handler = async (req, res) => {
       ]),
     ]);
 
-    // Добавить к элементам информацию о фильмах, удалить ненужные данные
     items.forEach((item) => {
       item.movie = movies.find(
         (movie) => movie._id.toString() === item.movieId.toString()
